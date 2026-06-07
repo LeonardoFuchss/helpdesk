@@ -3,6 +3,8 @@ package com.helpdesk.api.profile.domain;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.Set;
+
 @Entity
 @Getter
 @Setter
@@ -16,4 +18,8 @@ public class Profile {
     private Long id;
     private String name;
     private String description;
+    @ElementCollection(targetClass = Permission.class) // Indica que este atributo será uma coleção embarcada, ou seja, uma tabela auxiliar
+    @Enumerated(EnumType.STRING)
+    @CollectionTable(name = "profile_permissions", joinColumns = @JoinColumn(name = "profile_id"))
+    private Set<Permission> permission;
 }
