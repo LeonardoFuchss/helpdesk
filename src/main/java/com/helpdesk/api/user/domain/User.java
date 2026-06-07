@@ -1,5 +1,6 @@
 package com.helpdesk.api.user.domain;
 
+import com.helpdesk.api.profile.domain.Profile;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -18,5 +19,7 @@ public class User {
     private String lastName;
     private String email;
     private String password;
-    private String profile;
+    @ManyToOne(fetch = FetchType.LAZY) // Carrega o Profile apenas quando acessado
+    @JoinColumn(name = "profile_id", nullable = false)
+    private Profile profile;
 }
