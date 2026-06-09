@@ -17,9 +17,12 @@ public class ProfileService {
     private final ProfileMapper mapper;
 
     @Transactional
-    public void save(ProfileDTO profileDTO) {
+    public void save(ProfileDTO profileDTO) throws Exception {
         Profile profile = mapper.dtoToEntity(profileDTO);
         profile.setCreatedAt(LocalDateTime.now());
+        if (repository.existsByName(profile.getName())) {
+            throw new Exception("O perfil informado já existe.");
+        }
         repository.save(profile);
     }
 }

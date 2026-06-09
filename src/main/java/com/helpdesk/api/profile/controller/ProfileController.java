@@ -17,7 +17,7 @@ public class ProfileController {
     private final ProfileService service;
 
     @PostMapping
-    public ResponseEntity<?> save(@RequestBody ProfileDTO profileDTO) {
+    public ResponseEntity<?> save(@RequestBody ProfileDTO profileDTO) throws Exception {
         service.save(profileDTO);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
