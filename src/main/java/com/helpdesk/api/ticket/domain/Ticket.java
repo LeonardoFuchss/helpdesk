@@ -1,8 +1,11 @@
 package com.helpdesk.api.ticket.domain;
 
+import com.helpdesk.api.category.domain.Category;
 import com.helpdesk.api.user.domain.User;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -17,11 +20,18 @@ public class Ticket {
     private Long id;
     private String title;
     private String description;
-    private String category;
-    private String status;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "category_id", nullable = false)
+    private Category category;
+    @Enumerated(EnumType.STRING)
+    private TicketStatus status;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "assignee_id", nullable = false)
     private User assignee;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "created_by", nullable = false)
     private User createdBy;
+
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 }

@@ -3,6 +3,7 @@ package com.helpdesk.api.profile.domain;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
 import java.util.Set;
 
 @Entity
@@ -22,4 +23,7 @@ public class Profile {
     @Enumerated(EnumType.STRING)
     @CollectionTable(name = "profile_permissions", joinColumns = @JoinColumn(name = "profile_id"))
     private Set<Permission> permission;
+
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 }

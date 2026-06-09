@@ -4,7 +4,7 @@ import com.helpdesk.api.user.domain.User;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.List;
+import java.time.LocalDateTime;
 import java.util.Set;
 
 @Entity
@@ -30,4 +30,7 @@ public class Category {
             inverseJoinColumns = @JoinColumn(name = "user_id")
     )
     private Set<User> executors;
+
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 }

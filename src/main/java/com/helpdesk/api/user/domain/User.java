@@ -4,6 +4,8 @@ import com.helpdesk.api.profile.domain.Profile;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Table(name = "users")
 @AllArgsConstructor
@@ -22,4 +24,7 @@ public class User {
     @ManyToOne(fetch = FetchType.LAZY) // Carrega o Profile apenas quando acessado
     @JoinColumn(name = "profile_id", nullable = false)
     private Profile profile;
+
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 }
