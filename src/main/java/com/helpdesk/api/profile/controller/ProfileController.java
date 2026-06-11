@@ -1,14 +1,11 @@
 package com.helpdesk.api.profile.controller;
 
-import com.helpdesk.api.profile.dto.ProfileDTO;
+import com.helpdesk.api.profile.dto.ProfileRequestDTO;
 import com.helpdesk.api.profile.service.ProfileService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @AllArgsConstructor
 @RestController
@@ -17,8 +14,12 @@ public class ProfileController {
     private final ProfileService service;
 
     @PostMapping
-    public ResponseEntity<?> save(@RequestBody ProfileDTO profileDTO) throws Exception {
+    public ResponseEntity<?> save(@RequestBody ProfileRequestDTO profileDTO) throws Exception {
         service.save(profileDTO);
         return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+    @GetMapping
+    public ResponseEntity<?> findAll() {
+        return ResponseEntity.ok(service.findAll());
     }
 }

@@ -2,7 +2,7 @@ package com.helpdesk.api.profile;
 
 import com.helpdesk.api.profile.domain.Permission;
 import com.helpdesk.api.profile.domain.Profile;
-import com.helpdesk.api.profile.dto.ProfileDTO;
+import com.helpdesk.api.profile.dto.ProfileRequestDTO;
 import com.helpdesk.api.profile.mapper.ProfileMapper;
 import com.helpdesk.api.profile.repository.ProfileRepository;
 import com.helpdesk.api.profile.service.ProfileService;
@@ -28,7 +28,7 @@ public class ProfileServiceTest {
     @Test
     void shouldSetCreatedAtAndSaveProfile() throws Exception {
         // Criando DTO
-        ProfileDTO dto = new ProfileDTO(
+        ProfileRequestDTO dto = new ProfileRequestDTO(
                 "Admin",
                 "Administrador",
                 Set.of(Permission.values())
@@ -55,7 +55,7 @@ public class ProfileServiceTest {
 
     @Test
     void shouldNotSaveProfileWhenNameAlreadyExists() {
-        ProfileDTO dto = new ProfileDTO(
+        ProfileRequestDTO dto = new ProfileRequestDTO(
                 "Admin",
                 "Administrador",
                 Set.of(Permission.values())

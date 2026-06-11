@@ -6,7 +6,7 @@ import lombok.Builder;
 import java.util.Set;
 
 @Builder
-public record ProfileDTO(
+public record ProfileRequestDTO(
         String name,
         String description,
         Set<Permission> permissions) {
