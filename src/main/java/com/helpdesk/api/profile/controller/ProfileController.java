@@ -29,6 +29,6 @@ public class ProfileController {
     @PutMapping("/{id}")
     public ResponseEntity<?> update(@PathVariable Long id, @RequestBody ProfileRequestDTO profileDTO) {
         service.update(id, profileDTO);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }
