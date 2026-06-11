@@ -3,6 +3,7 @@ package com.helpdesk.api.profile;
 import com.helpdesk.api.profile.domain.Permission;
 import com.helpdesk.api.profile.domain.Profile;
 import com.helpdesk.api.profile.dto.ProfileRequestDTO;
+import com.helpdesk.api.profile.dto.ProfileResponseDTO;
 import com.helpdesk.api.profile.mapper.ProfileMapper;
 import com.helpdesk.api.profile.repository.ProfileRepository;
 import com.helpdesk.api.profile.service.ProfileService;
@@ -10,9 +11,11 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
+
+import java.util.List;
 import java.util.Set;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -68,5 +71,14 @@ public class ProfileServiceTest {
 
         assertThrows(Exception.class, () -> service.save(dto));
         verify(repository, Mockito.never()).save(ArgumentMatchers.any(Profile.class));
+    }
+    @Test
+    void shouldReturnAllProfiles() {
+        List<Profile> profiles = List.of(new Profile(), new Profile());
+        when(repository.findAll()).thenReturn(profiles); /* Configurando mock para retornar uma lista de perfis definidas anteriormente*/
+        List<ProfileResponseDTO> result = service.findAll();
+        assertEquals(2, result.size());
+        verify(repository).findAll();
+        /* profiles e result referencial a mesma lista definida no mock */
     }
 }
