@@ -1,5 +1,6 @@
 package com.helpdesk.api.profile.domain;
 
+import com.helpdesk.api.profile.dto.ProfileRequestDTO;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -26,4 +27,11 @@ public class Profile {
 
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+
+
+    public void update(Long id, ProfileRequestDTO profileDTO) {
+        this.name = profileDTO.name();
+        this.description = profileDTO.description();
+        this.permission = profileDTO.permissions();
+    }
 }

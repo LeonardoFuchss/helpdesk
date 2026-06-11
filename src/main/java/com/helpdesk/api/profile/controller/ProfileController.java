@@ -26,4 +26,9 @@ public class ProfileController {
     public ResponseEntity<?> findById(@PathVariable Long id) {
         return ResponseEntity.ok(service.findById(id));
     }
+    @PutMapping("/{id}")
+    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody ProfileRequestDTO profileDTO) {
+        service.update(id, profileDTO);
+        return ResponseEntity.ok().build();
+    }
 }

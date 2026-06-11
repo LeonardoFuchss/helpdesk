@@ -42,4 +42,12 @@ public class ProfileService {
         }
         throw new RuntimeException("Profile not found");
     }
+    @Transactional
+    public void update(Long id, ProfileRequestDTO profileDTO) {
+        Optional<Profile> profile = repository.findById(id);
+        if (profile.isPresent()) {
+            profile.get().update(id, profileDTO);
+            repository.save(profile.get());
+        }
+    }
 }

@@ -97,4 +97,18 @@ public class ProfileServiceTest {
         verify(repository).findById(1L);
         verify(mapper).entityToDto(profile);
     }
+    @Test
+    void shouldUpdateProfile() {
+        Profile profile = new Profile();
+        profile.setId(1L);
+        profile.setName("Admin");
+        profile.setDescription("Administrador");
+        ProfileRequestDTO dto = new ProfileRequestDTO("Comum", "Usuário comum", Set.of(Permission.values()));
+        when(repository.findById(1L)).thenReturn(java.util.Optional.of(profile));
+        service.update(1L, dto);
+        assertEquals("Comum", profile.getName());
+        assertEquals("Usuário comum", profile.getDescription());
+        verify(repository).findById(1L);
+        verify(repository).save(profile);
+    }
 }
