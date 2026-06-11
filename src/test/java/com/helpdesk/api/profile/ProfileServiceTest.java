@@ -81,4 +81,20 @@ public class ProfileServiceTest {
         verify(repository).findAll();
         /* profiles e result referencial a mesma lista definida no mock */
     }
+    @Test
+    void shouldReturnProfileById() {
+        Profile profile = new Profile();
+        profile.setId(1L);
+        profile.setName("Admin");
+        profile.setDescription("Administrador");
+
+        ProfileResponseDTO response = new ProfileResponseDTO("Admin", "Administrador");
+        when(repository.findById(1L)).thenReturn(java.util.Optional.of(profile)); /* mock para retornar o profile */
+        when(mapper.entityToDto(profile)).thenReturn(response); /* mock para retornar o response */
+
+        ProfileResponseDTO result = service.findById(1L);
+        assertEquals(response, result);
+        verify(repository).findById(1L);
+        verify(mapper).entityToDto(profile);
+    }
 }

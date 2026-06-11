@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -27,12 +28,18 @@ public class ProfileService {
         }
         repository.save(profile);
     }
-
     public List<ProfileResponseDTO> findAll() {
         List<Profile> profiles = repository.findAll();
         return profiles
                 .stream()
                 .map(mapper::entityToDto)
                 .toList();
+    }
+    public ProfileResponseDTO findById(Long id) {
+        Optional<Profile> profile = repository.findById(id);
+        if (profile.isPresent()) {
+            return mapper.entityToDto(profile.get());
+        }
+        throw new RuntimeException("Profile not found");
     }
 }

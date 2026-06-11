@@ -22,4 +22,8 @@ public class ProfileController {
     public ResponseEntity<?> findAll() {
         return ResponseEntity.ok(service.findAll());
     }
+    @GetMapping("/{id}")
+    public ResponseEntity<?> findById(@PathVariable Long id) {
+        return ResponseEntity.ok(service.findById(id));
+    }
 }
