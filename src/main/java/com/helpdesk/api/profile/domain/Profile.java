@@ -20,16 +20,19 @@ public class Profile {
     private Long id;
     private String name;
     private String description;
-    @ElementCollection(targetClass = Permission.class) // Indica que este atributo será uma coleção embarcada, ou seja, uma tabela auxiliar
+    @ElementCollection(targetClass = Permission.class)
+    // Indica que este atributo será uma coleção embarcada, ou seja, uma tabela auxiliar
     @Enumerated(EnumType.STRING)
     @CollectionTable(name = "profile_permissions", joinColumns = @JoinColumn(name = "profile_id"))
     private Set<Permission> permission;
-
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status")
+    private Status status;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
 
-    public void update(Long id, ProfileRequestDTO profileDTO) {
+    public void update(ProfileRequestDTO profileDTO) {
         this.name = profileDTO.name();
         this.description = profileDTO.description();
         this.permission = profileDTO.permissions();

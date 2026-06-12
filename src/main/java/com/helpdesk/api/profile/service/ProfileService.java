@@ -1,6 +1,7 @@
 package com.helpdesk.api.profile.service;
 
 import com.helpdesk.api.profile.domain.Profile;
+import com.helpdesk.api.profile.domain.Status;
 import com.helpdesk.api.profile.dto.ProfileRequestDTO;
 import com.helpdesk.api.profile.dto.ProfileResponseDTO;
 import com.helpdesk.api.profile.mapper.ProfileMapper;
@@ -23,6 +24,7 @@ public class ProfileService {
     public void save(ProfileRequestDTO profileDTO) throws Exception {
         Profile profile = mapper.dtoToEntity(profileDTO);
         profile.setCreatedAt(LocalDateTime.now());
+        profile.setStatus(Status.ACTIVE);
         if (repository.existsByName(profile.getName())) {
             throw new Exception("O perfil informado já existe.");
         }
@@ -46,7 +48,7 @@ public class ProfileService {
     public void update(Long id, ProfileRequestDTO profileDTO) {
         Optional<Profile> profile = repository.findById(id);
         if (profile.isPresent()) {
-            profile.get().update(id, profileDTO);
+            profile.get().update(profileDTO);
             repository.save(profile.get());
         }
     }
