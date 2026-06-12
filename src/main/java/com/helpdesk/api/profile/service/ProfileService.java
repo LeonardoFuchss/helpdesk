@@ -49,7 +49,10 @@ public class ProfileService {
         Optional<Profile> profile = repository.findById(id);
         if (profile.isPresent()) {
             profile.get().update(profileDTO);
+            profile.get().setUpdatedAt(LocalDateTime.now());
             repository.save(profile.get());
+        } else {
+            throw new RuntimeException("Profile not found");
         }
     }
     @Transactional
@@ -61,4 +64,4 @@ public class ProfileService {
             throw new RuntimeException("Profile not found");
         }
     }
-}   
+}
