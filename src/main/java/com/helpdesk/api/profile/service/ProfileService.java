@@ -52,4 +52,13 @@ public class ProfileService {
             repository.save(profile.get());
         }
     }
-}
+    @Transactional
+    public void disable(Long id) {
+        Optional<Profile> profile = repository.findById(id);
+        if (profile.isPresent()) {
+            profile.get().disable();
+        } else {
+            throw new RuntimeException("Profile not found");
+        }
+    }
+}   

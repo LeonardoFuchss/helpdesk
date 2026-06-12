@@ -2,6 +2,7 @@ package com.helpdesk.api.profile;
 
 import com.helpdesk.api.profile.domain.Permission;
 import com.helpdesk.api.profile.domain.Profile;
+import com.helpdesk.api.profile.domain.Status;
 import com.helpdesk.api.profile.dto.ProfileRequestDTO;
 import com.helpdesk.api.profile.dto.ProfileResponseDTO;
 import com.helpdesk.api.profile.mapper.ProfileMapper;
@@ -110,5 +111,13 @@ public class ProfileServiceTest {
         assertEquals("Usuário comum", profile.getDescription());
         verify(repository).findById(1L);
         verify(repository).save(profile);
+    }
+    @Test
+    void shouldDisableProfile() {
+        Profile profile = new Profile();
+        profile.setId(1L);
+        when(repository.findById(1L)).thenReturn(java.util.Optional.of(profile));
+        service.disable(1L);
+        assertEquals(Status.INACTIVE, profile.getStatus());
     }
 }

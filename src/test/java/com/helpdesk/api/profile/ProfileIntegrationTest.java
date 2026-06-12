@@ -2,6 +2,7 @@ package com.helpdesk.api.profile;
 
 import com.helpdesk.api.profile.domain.Permission;
 import com.helpdesk.api.profile.domain.Profile;
+import com.helpdesk.api.profile.domain.Status;
 import com.helpdesk.api.profile.repository.ProfileRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -58,6 +59,7 @@ class ProfileIntegrationTest {
         profile.setName("Teste");
         profile.setDescription("Administrador");
         profile.setPermission(Set.of(Permission.PROFILE_READ));
+        profile.setStatus(Status.ACTIVE);
 
         repository.save(profile);
 
@@ -72,6 +74,7 @@ class ProfileIntegrationTest {
         profile.setName("Teste");
         profile.setDescription("Administrador");
         profile.setPermission(Set.of(Permission.PROFILE_READ));
+        profile.setStatus(Status.ACTIVE);
 
         profile = repository.save(profile);
 
@@ -88,6 +91,7 @@ class ProfileIntegrationTest {
         profile.setName("Admin");
         profile.setDescription("Administrador");
         profile.setPermission(Set.of(Permission.PROFILE_READ));
+        profile.setStatus(Status.ACTIVE);
 
         profile = repository.save(profile);
 
@@ -109,5 +113,22 @@ class ProfileIntegrationTest {
 
         assertEquals("Comum", updatedProfile.getName());
         assertEquals("Usuário comum", updatedProfile.getDescription());
+    }
+    @Test
+    void shouldDisableProfile() throws Exception {
+        Profile profile = new Profile();
+        profile.setName("Admin");
+        profile.setDescription("Administrador");
+        profile.setPermission(Set.of(Permission.PROFILE_READ));
+        profile.setStatus(Status.ACTIVE);
+
+        profile = repository.save(profile);
+
+        mvc.perform(
+                delete("/profiles/{id}", profile.getId())
+        ).andExpect(status().isNoContent());
+
+        profile = repository.findById(profile.getId()).orElseThrow();
+        assertEquals(Status.INACTIVE, profile.getStatus());
     }
 }

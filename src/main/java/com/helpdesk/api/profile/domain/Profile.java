@@ -21,8 +21,8 @@ public class Profile {
     private String name;
     private String description;
     @ElementCollection(targetClass = Permission.class)
-    // Indica que este atributo será uma coleção embarcada, ou seja, uma tabela auxiliar
     @Enumerated(EnumType.STRING)
+    // Indica que este atributo será uma coleção embarcada, ou seja, uma tabela auxiliar
     @CollectionTable(name = "profile_permissions", joinColumns = @JoinColumn(name = "profile_id"))
     private Set<Permission> permission;
     @Enumerated(EnumType.STRING)
@@ -36,5 +36,8 @@ public class Profile {
         this.name = profileDTO.name();
         this.description = profileDTO.description();
         this.permission = profileDTO.permissions();
+    }
+    public void disable() {
+        this.status = Status.INACTIVE;
     }
 }

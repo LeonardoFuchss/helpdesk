@@ -31,4 +31,9 @@ public class ProfileController {
         service.update(id, profileDTO);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> disable(@PathVariable Long id) {
+        service.disable(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
 }
